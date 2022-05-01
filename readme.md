@@ -4,6 +4,9 @@
 
 - Demonstrate a methodology that will seamlessly provide branch-specific versions of maven artifacts with minimal manual intervention by the developer. 
 
+## Setup: 
+* Must run the following for hooks to work:
+```$ git config --local include.path ../.gitconfig```
 
 ## Description of use:
 instead of the project version supplied in multiple places within the pom.xml, it is now 
