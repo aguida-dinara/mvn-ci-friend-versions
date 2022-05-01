@@ -22,3 +22,15 @@ Will produce a version of ```3.2.5-branchname-SNAPSHOT```
 - https://maven.apache.org/maven-ci-friendly.html
 - https://www.mojohaus.org/flatten-maven-plugin/
 
+## TODO:
+1. 
+
+2. Fix the following when switching branches - maven.config changed automatically requires a force checkout
+this is not ideal
+```
+error: Your local changes to the following files would be overwritten by checkout:
+	.mvn/maven.config
+Please commit your changes or stash them before you switch branches.
+Aborting
+
+```

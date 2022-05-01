@@ -29,6 +29,7 @@ function create_changelist_arg(){
 
 # SCRIPT START:
 # sed regex replaces non-(alphanumeric, dot or dash) char sequences with a dash
+git revert $FILE
 current_branch=$(git rev-parse --abbrev-ref HEAD | sed -E -e 's@[^0-9A-Za-z.-]+@-@g')
 echo "current branch is ${current_branch}"
 verify_maven_config
