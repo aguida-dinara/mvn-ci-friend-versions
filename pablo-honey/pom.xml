@@ -10,10 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>mvn-ci-friendly-versions</groupId>
     <artifactId>pablo-honey</artifactId>
-
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
+    <packaging>jar</packaging>
 
 </project>

@@ -14,8 +14,6 @@
     </modules>
 
     <properties>
-        <revision>1.0.1</revision>
-        <changelist>-foobar-SNAPSHOT</changelist>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
