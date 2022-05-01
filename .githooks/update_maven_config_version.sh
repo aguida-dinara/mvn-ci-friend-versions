@@ -5,7 +5,7 @@ stable_branches='main master dev develop'
 
 MAVEN_DOT_DIR=.mvn
 MAVEN_CONFIG_FILENAME=maven.config
-FILE=${MAVEN_DOT_DIR}/${MAVEN_CONFIG_FILENAME}
+FILE=../${MAVEN_DOT_DIR}/${MAVEN_CONFIG_FILENAME}
 # Creates the .mvn directory and maven.config file if they do not already exist.
 function setup_maven_config() {
     if ! [ -d "$MAVEN_DOT_DIR" ]; then
@@ -25,21 +25,21 @@ function create_branch_arg(){
   # if on a stable branch, then don't set a branch name for the version
   if [[ " $stable_branches " =~ .*\ $current_branch\ .* ]]; then
     echo "On a stable branch, the branch name WILL NOT be added to maven.version config"
-    sed -i "/-Dbranch=/c\-Dbranch=" .mvn/maven.config
+    sed -i "/-Dbranch=/c\-Dbranch=" $FILE
   else
     echo "On a non-stable branch, the branch name WILL be added to maven.version config"
-    sed -i "/-Dbranch=/c\-Dbranch=-${current_branch}" .mvn/maven.config
+    sed -i "/-Dbranch=/c\-Dbranch=-${current_branch}" $FILE
   fi
 }
 
 # Creates or replaces the -Dchangelist= argument in maven.config
 function create_changelist_arg() {
   if ! grep -q '\-Dchangelist=' $FILE ; then echo '-Dchangelist=-SNAPSHOT' >> $FILE; fi
-  if grep -q "\-Dchangelist=" .mvn/maven.config; then
+  if grep -q "\-Dchangelist=" $FILE; then
      echo "Found -Dchangelist= entry. Not altering."
   else
       echo "Did not find entry for -Dchangelist=. Adding..."
-      sed -i "$ a -Dchangelist=-SNAPSHOT" .mvn/maven.config
+      sed -i "$ a -Dchangelist=-SNAPSHOT" $FILE
   fi
 }
 
