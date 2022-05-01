@@ -32,7 +32,6 @@ function create_changelist_arg(){
 echo "======================================="
 echo "=== GIT POST-CHECKOUT HOOK EXECUTED ==="
 echo "======================================="
-git reset HEAD $FILE
 current_branch=$(git rev-parse --abbrev-ref HEAD | sed -E -e 's@[^0-9A-Za-z.-]+@-@g')
 echo "current branch is ${current_branch}"
 verify_maven_config
