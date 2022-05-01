@@ -5,7 +5,7 @@ stable_branches='main master dev develop'
 
 MAVEN_DOT_DIR=.mvn
 MAVEN_CONFIG_FILENAME=maven.config
-FILE=../${MAVEN_DOT_DIR}/${MAVEN_CONFIG_FILENAME}
+FILE=${MAVEN_DOT_DIR}/${MAVEN_CONFIG_FILENAME}
 # Creates the .mvn directory and maven.config file if they do not already exist.
 function setup_maven_config() {
     if ! [ -d "$MAVEN_DOT_DIR" ]; then
