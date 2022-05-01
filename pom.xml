@@ -6,9 +6,11 @@
 
     <groupId>org.example</groupId>
     <artifactId>mvn-ci-friendly-versions</artifactId>
-    <version>${revision}</version>
+    <version>${project.version.number}${branch}${changelist}</version>
+    <packaging>jar</packaging>
 
     <properties>
+        <project.version.number>1.0.0</project.version.number>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
