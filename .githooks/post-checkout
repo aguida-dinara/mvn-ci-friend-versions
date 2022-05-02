@@ -20,10 +20,10 @@ function create_changelist_arg(){
   # if on a stable branch, then don't set a branch name for the version
   if [[ " $stable_branches " =~ .*\ $current_branch\ .* ]]; then
     echo "On a stable branch, the branch name WILL NOT be added to maven.version config"
-    sed -i "/-Dchangelist=/c\-Dchangelist=-SNAPSHOT" $FILE
+    sed -i "" "s/-Dchangelist=[^$]*$/\-Dchangelist=-SNAPSHOT/" $FILE
   else
     echo "On a non-stable branch, the branch name WILL be added to maven.version config"
-    sed -i "/-Dchangelist=/c\-Dchangelist=-${current_branch}-SNAPSHOT" $FILE
+    sed -i "" "s/-Dchangelist=[^$]*$/\-Dchangelist=-${current_branch}-SNAPSHOT/" $FILE
   fi
 }
 
