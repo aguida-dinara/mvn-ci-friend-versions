@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.example</groupId>
-    <artifactId>child-a</artifactId>
+    <artifactId>kid-a</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
