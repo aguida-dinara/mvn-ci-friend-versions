@@ -2,11 +2,12 @@
 
 ## Goals:
 
-- Provide an automated means to version maven artifacts on separate branches with minimal manual intervention by the developer. 
+- Provide an automated way to control maven artifact versions on separate branches with minimal intervention required by the developer. 
 
 ## Description:
-* Leveraging the [Maven CI Friendly Versions](https://maven.apache.org/maven-ci-friendly.html) that appeared in Maven 3.5.0-beta-1, we can use certain variables in a <version> tag within a pom.xml
-* Using this newer model, a maven project's version is no longer supplied in the pom.xml of the project. Instead it can be supplied in one of two ways:
+* Leveraging the features described in [Maven CI Friendly Versions](https://maven.apache.org/maven-ci-friendly.html) appearing in Maven 3.5.0-beta-1, we can now use certain variables within a pom.xml's <version> tag
+to better manage the project's version. 
+* Using this newer model, a maven project's actual version is no longer supplied in the pom.xml of the project. Instead, it is now supplied in one of two ways:
     * Within ```.mvn/maven.config``` under parameter ```revision```
     * At the command line, via:
     ```
@@ -36,3 +37,7 @@ Run the following for hooks to work:
 ## Resources & Inspirations: 
 - https://maven.apache.org/maven-ci-friendly.html
 - https://www.mojohaus.org/flatten-maven-plugin/
+
+
+## TODO: 
+- Currently, only works in Windows and Linux. Need to find a workaround to poorly designed behavior in OSX versions of sed.  
