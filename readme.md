@@ -2,38 +2,37 @@
 
 ## Goals:
 
-- Demonstrate a methodology that will seamlessly provide branch-specific versions of maven artifacts with minimal manual intervention by the developer. 
+- Provide an automated means to version maven artifacts on separate branches with minimal manual intervention by the developer. 
+
+## Description:
+* Leveraging the [Maven CI Friendly Versions](https://maven.apache.org/maven-ci-friendly.html) that appeared in Maven 3.5.0-beta-1, we can use certain variables in a <version> tag within a pom.xml
+* Using this newer model, a maven project's version is no longer supplied in the pom.xml of the project. Instead it can be supplied in one of two ways:
+    * Within ```.mvn/maven.config``` under parameter ```revision```
+    * At the command line, via:
+    ```
+    mvn -Drevision=3.2.5 -Dchangelist=-branchname-SNAPSHOT clean install
+    ``` 
+    * To define a version suffix, an additional parameter  ```changelist``` can be used. Using the command-line example above, will product the following version:
+  
+    ```3.2.5-branchname-SNAPSHOT```
+
+* The maven version is now specified in .mvn/maven.config along with any other value we wish to append to the project's maven version.
+* A git "post-check" hook is added to the project which will automatically change the maven version's suffix on checkout. For example, we can:
+  * Append a branch-name to the project's version.
+  * Determine whether the version should be ```-SNAPSHOT``` based on the currency branch's name (or other characteristics). 
+  * Additional any other additional logic can be defined based on the name of the branch 
+
+These are just a few examples: This process is reasonably flexible and could be adapter to any number of possible git/maven workflows. 
+
+## Prerequisites:
+* Maven 3.5.0-beta-1 or later
+* Git (not sure of the minimum version)
 
 ## Setup: 
-* Must run the following for hooks to work:
+* A single one-time configuration of the user's git configuration:
+Run the following for hooks to work:
 ```$ git config --local include.path ../.gitconfig```
-
-## Description of use:
-instead of the project version supplied in multiple places within the pom.xml, it is now 
-supplied within .mvn/maven.config under parameter ```revision``` 
-
-Additionally, another variable is provided to append an additional version suffix named
-```changelist```
-
-These can be overridden programatically via the command line. For example:
-```
-mvn -Drevision=3.2.5 -Dchangelist=-branchname-SNAPSHOT clean install
-```
-Will produce a version of ```3.2.5-branchname-SNAPSHOT```
 
 ## Resources & Inspirations: 
 - https://maven.apache.org/maven-ci-friendly.html
 - https://www.mojohaus.org/flatten-maven-plugin/
-
-## TODO:
-1. 
-
-2. Fix the following when switching branches - maven.config changed automatically requires a force checkout
-this is not ideal
-```
-error: Your local changes to the following files would be overwritten by checkout:
-	.mvn/maven.config
-Please commit your changes or stash them before you switch branches.
-Aborting
-
-```
