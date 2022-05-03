@@ -3,6 +3,7 @@
 ## Goals:
 
 - Provide an automated way to control maven artifact versions on separate branches with minimal intervention required by the developer. 
+- Prevent developers working on the same codebase in seperate branches of negatively impacting one-another when making changes to shared libraries. 
 
 ## Description:
 * Leveraging the features described in [Maven CI Friendly Versions](https://maven.apache.org/maven-ci-friendly.html) appearing in Maven 3.5.0-beta-1, we can now use certain variables within a pom.xml's <version> tag
