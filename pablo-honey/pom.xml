@@ -8,7 +8,6 @@
         <version>${revision}${changelist}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>mvn-ci-friendly-versions</groupId>
     <artifactId>pablo-honey</artifactId>
     <packaging>jar</packaging>
 
