@@ -37,7 +37,3 @@ Run the following for hooks to work:
 ## Resources & Inspirations: 
 - https://maven.apache.org/maven-ci-friendly.html
 - https://www.mojohaus.org/flatten-maven-plugin/
-
-
-## TODO: 
-- Currently, only works in Windows and Linux. Need to find a workaround to poorly designed behavior in OSX versions of sed.  
