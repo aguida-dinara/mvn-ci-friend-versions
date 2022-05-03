@@ -6,6 +6,14 @@ stable_branches='main master dev develop'
 MAVEN_DOT_DIR=.mvn
 MAVEN_CONFIG_FILENAME=maven.config
 FILE=${MAVEN_DOT_DIR}/${MAVEN_CONFIG_FILENAME}
+
+SEDOPTION=
+if [[ "OSTYPE" == "darwin"* ]]; then
+  SEDOPTION="-i ''"
+else
+  SEDOPTION="-i"
+fi
+
 function verify_maven_config() {
     if ! [ -f "$FILE" ]; then
       echo "ERROR: ${FILE} does not exist."
@@ -21,11 +29,11 @@ function create_changelist_arg(){
   if [[ " $stable_branches " =~ .*\ $current_branch\ .* ]]; then
     echo "On a stable branch, the branch name WILL NOT be added to maven.version config"
     ls -la "${FILE}"
-    sed -i "" "s/-Dchangelist=[^$]*$/\-Dchangelist=-SNAPSHOT/" $FILE
+    sed "${SEDOPTION}" "s/-Dchangelist=[^$]*$/\-Dchangelist=-SNAPSHOT/" $FILE
     cat $FILE
   else
     echo "On a non-stable branch, the branch name WILL be added to maven.version config"
-    sed -i "" "s/-Dchangelist=[^$]*$/\-Dchangelist=-${current_branch}-SNAPSHOT/" $FILE
+    sed "${SEDOPTION}" "s/-Dchangelist=[^$]*$/\-Dchangelist=-${current_branch}-SNAPSHOT/" $FILE
     cat $FILE
   fi
 }
