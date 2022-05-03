@@ -8,9 +8,11 @@ MAVEN_CONFIG_FILENAME=maven.config
 FILE=${MAVEN_DOT_DIR}/${MAVEN_CONFIG_FILENAME}
 
 SEDOPTION=
-if [[ "OSTYPE" == "darwin"* ]]; then
-  SEDOPTION="-i ''"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  echo "using sed options for OSX"
+  SEDOPTION="-i ''\\"
 else
+  echo "using sed options for non-OSX"
   SEDOPTION="-i"
 fi
 
@@ -29,11 +31,11 @@ function create_changelist_arg(){
   if [[ " $stable_branches " =~ .*\ $current_branch\ .* ]]; then
     echo "On a stable branch, the branch name WILL NOT be added to maven.version config"
     ls -la "${FILE}"
-    sed "${SEDOPTION}" "s/-Dchangelist=[^$]*$/\-Dchangelist=-SNAPSHOT/" $FILE
+    sed $SEDOPTION "s/-Dchangelist=[^$]*$/\-Dchangelist=-SNAPSHOT/" $FILE
     cat $FILE
   else
     echo "On a non-stable branch, the branch name WILL be added to maven.version config"
-    sed "${SEDOPTION}" "s/-Dchangelist=[^$]*$/\-Dchangelist=-${current_branch}-SNAPSHOT/" $FILE
+    sed $SEDOPTION "s/-Dchangelist=[^$]*$/\-Dchangelist=-${current_branch}-SNAPSHOT/" $FILE
     cat $FILE
   fi
 }
