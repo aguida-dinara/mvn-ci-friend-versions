@@ -9,8 +9,8 @@
     <version>${revision}${changelist}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>kid-a</module>
         <module>pablo-honey</module>
+        <module>kid-a</module>
     </modules>
 
     <properties>
