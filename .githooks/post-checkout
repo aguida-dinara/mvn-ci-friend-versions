@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Assumption: We do not append a branch name to these stable branches
+stable_branches='main master dev develop'
+
+MAVEN_DOT_DIR=.mvn
+MAVEN_CONFIG_FILENAME=maven.config
+FILE=${MAVEN_DOT_DIR}/${MAVEN_CONFIG_FILENAME}
+
+SEDOPTION=
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  echo "using sed options for OSX"
+  SEDOPTION="-i ''\\"
+else
+  echo "using sed options for non-OSX"
+  SEDOPTION="-i"
+fi
+
+function verify_maven_config() {
+    if ! [ -f "$FILE" ]; then
+      echo "ERROR: ${FILE} does not exist."
+    elif ! grep -q '\-Drevision=' $FILE ; then
+      echo "ERROR: Revision value is missing from ${FILE}. Please include a value for -Drevision=<maven version>"
+    fi
+}
+
+# Creates or replaces the -Dchangelist= argument in maven.config based on the current git branch
+function create_changelist_arg(){
+  if ! grep -q '\-Dchangelist=' $FILE ; then echo '-Dchangelist=' >> $FILE; fi
+  # if on a stable branch, then don't set a branch name for the version
+  if [[ " $stable_branches " =~ .*\ $current_branch\ .* ]]; then
+    echo "On a stable branch, the branch name WILL NOT be added to maven.version config"
+    ls -la "${FILE}"
+    sed $SEDOPTION "s/-Dchangelist=[^$]*$/\-Dchangelist=-SNAPSHOT/" $FILE
+    cat $FILE
+  else
+    echo "On a non-stable branch, the branch name WILL be added to maven.version config"
+    sed $SEDOPTION "s/-Dchangelist=[^$]*$/\-Dchangelist=-${current_branch}-SNAPSHOT/" $FILE
+    cat $FILE
+  fi
+}
+
+# SCRIPT START:
+# sed regex replaces non-(alphanumeric, dot or dash) char sequences with a dash
+echo "======================================="
+echo "=== GIT POST-CHECKOUT HOOK EXECUTED ==="
+echo "======================================="
+current_branch=$(git rev-parse --abbrev-ref HEAD | sed -E -e 's@[^0-9A-Za-z.-]+@-@g')
+echo "current branch is ${current_branch}"
+verify_maven_config
+create_changelist_arg
